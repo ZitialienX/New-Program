@@ -1,0 +1,1297 @@
+/*******************************************************
+
+--> There are programs in development...
+--> This program is designed like a website with selections of different games and programs... At least, that is the goal...
+--> Everyone's support it appreciated!
+
+
+CREDITS :DDDD
+(I'm sure I missed a lot of people that helped me like that one winston dude, but I'm going to better myself by starting now!)
+
+-mariofan2468
+    https://www.khanacademy.org/profile/kaid_358531321419957681081340/discussion
+-Salvago
+    https://www.khanacademy.org/profile/kaid_973919919433881243608878/discussion
+-Arjen Stavast
+    https://www.khanacademy.org/profile/kaid_169496174513384302402439/discussion
+-Eric Sursa
+    https://www.khanacademy.org/profile/kaid_948187649525594101280786/discussion
+    
+********************************************************/
+/**Default Scene: Home Page**/
+var HomePage = 1;
+var scenes = HomePage;
+
+/**Colo(u)r Variables**/
+var bl = color(0, 102, 255);
+var ye = color(255, 242, 0);
+var re = color(255, 0, 0);
+var gr = color(13, 255, 0);
+var pi = color(250, 153, 250);
+var pu = color(129, 12, 168);
+var br = color(128, 54, 14);
+var or = color(245, 146, 59);
+var white = color(255, 255, 255);
+var black = color(0, 0, 0);
+var grey = color(138, 126, 126);
+
+/***variables for Scene 1***/
+
+    var centerLine = 0.0;
+    var centerLineStroke;
+    var horizontalRect = 0;
+    var rectSpeed;
+    var rectColour1 = random(0, 255);
+    var rectColour2 = random(0, 255);
+    var rectColour3 = random(0, 255);
+
+
+/**Home Page**/
+var sceneOne = function() {
+
+    background(148, 200, 255);
+    textSize(30);
+    fill(255, 255, 255);
+    text("New Program", 200, 200);
+    
+    //button function
+    var startProgramButton = function() {
+        
+        //Button
+        fill(0, 204, 255);
+        stroke(77, 114, 117);
+        strokeWeight(1.0);
+        triangle(30, 150, 30, 230, 80, 190);
+        
+        /**Centerline Animation**/
+        strokeWeight(centerLine);
+        stroke(108, 205, 240);
+        line(0, 189.5, 400, 189.5);
+        
+        if (centerLine <= 0.00){
+            centerLineStroke = 0.02;
+        
+        } else if (centerLine >= 2.00){
+            centerLineStroke = -0.02; 
+        }
+        centerLine += centerLineStroke;  
+        
+        /**Moving Rectangle*/
+        if (horizontalRect <= 0){
+            rectSpeed = 2;  
+            rectColour1 = random(100, 255);
+            rectColour2 = random(100, 255);
+            rectColour3 = random(100, 255);
+        }else if (horizontalRect >= 375){
+            rectSpeed = -2;
+            rectColour1 = random(100, 255);
+            rectColour2 = random(100, 255);
+            rectColour3 = random(100, 255);
+        }
+        horizontalRect += rectSpeed;
+        
+        noStroke();
+        fill(rectColour1, rectColour2, rectColour3);
+        rect(horizontalRect, 187.5, 25, 5);
+        
+        //rulers
+        //stroke(0, 0, 0);
+        //strokeWeight(1);
+        //noStroke();
+        //line(0, 170, 400, 170);
+        //line(55, 0, 55, 400);
+        
+        /**Button*/
+        //triangle perimiters
+        var triA = (mouseX >= 30 && mouseX <= 80) && (mouseY >= 170 && mouseY <= 210); 
+        var triB = (mouseX >= 30 && mouseX <= 55) && (mouseY >= 150 && mouseY <= 230);
+        
+        //Button Interaction
+        mouseClicked = function(){
+            if (triA || triB){
+                scenes = 2; 
+            }
+        };
+        
+    };
+    
+    //button, of course
+    startProgramButton();
+};
+
+
+/**Variables for Scene 2**/
+    var homeButtonX = 0;
+    var homeButtonY = 0;
+    var homeButtonW = 50;
+    var homeButtonH = 400;
+    var cookieImage = function(x, y, w, h){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        /**cookie stuff**/
+        fill(204, 138, 16);
+        ellipse(x, y, w, h);
+        fill(138, 85, 4);
+        ellipse(x-10, y+17, w/10, h/6);
+        ellipse(x-18, y-29, w/7, h/6);
+        ellipse(x-34, y-1, w/5, h/10);
+        ellipse(x+19, y+-25, w/10, h/5);
+        ellipse(x+-4, y+37, w/5, h/7);
+        ellipse(x+-5, y+-6, w/6, h/6);
+        ellipse(x+27, y+3, w/7, h/5);
+        ellipse(x+23, y+25, w/4, h/10);
+    };
+
+
+/**Program Selection Page**/
+var sceneTwo = function(){
+    background(rectColour1, rectColour2, rectColour3);
+    
+    /**Home Button**/
+    //button
+    fill(rectColour3, rectColour1, rectColour2);
+    rect(homeButtonX, homeButtonY, homeButtonW, homeButtonH);
+    
+    //text
+    pushMatrix();
+    fill(rectColour2, rectColour3, rectColour1);
+    rotate(-90);
+    textFont(createFont("monospace"), 65);
+    text("GO HOME", -330, 41);
+    popMatrix();
+    
+    /**button perimeters**/
+    var insideHome = (mouseX >= homeButtonX && mouseX <= homeButtonX+homeButtonW)&& 
+    (mouseY >= homeButtonY && mouseY <= homeButtonY+homeButtonH);
+    var insideProgramOne = (mouseX>= 70 && mouseX<= 195)&&(mouseY>= 25 && mouseY<= 150);
+    var insideProgramTwo = (mouseX>= 255 && mouseX<= 380)&&(mouseY>= 25 && mouseY<= 150);
+    var insideProgramThree = (mouseX>= 70 && mouseX<= 195)&&(mouseY>= 200 && mouseY<= 325);
+    //text size for program buttons
+    textSize(15);
+    
+    
+    /**Program1 Button**/
+    fill(255, 255, 255);
+    rect(70, 25, 125, 125);
+    fill(0, 0, 0);
+    text("Cookie Clicker!", 70, 180);
+    cookieImage(133, 87, 100, 100);
+    
+    
+    /**Program2 Button**/
+    fill(255, 255, 255);
+    rect(255, 25, 125, 125);
+    fill(0, 0, 0);
+    text("Program Two \n(Dysfunctional \ndon't touch)!", 265, 180);
+    fill(137, 142, 156);
+    rect(300, 135, 15, 15);
+    
+    /**Program3 Button**/
+    fill(255, 255, 255);
+    rect(70, 200, 125, 125);
+    fill(0, 0, 0);
+    text("Project: \n Simple Game", 70, 345);
+    
+    
+   
+    /**Button Clicking Interactions**/
+    mouseClicked = function(){
+        
+        if (insideHome){
+            scenes = 1;
+            Program.restart();
+        }
+        
+        if (insideProgramOne){
+            scenes = 3;    
+        }else if (insideProgramTwo){
+            scenes = 4;
+        }else if (insideProgramThree){
+            scenes = 5;
+        }
+        
+        
+        
+    
+    };
+    
+};
+
+
+/** Variables for Scene 3**/
+    var cookieNum = 0;
+    var cookiePowa = 1;
+    var powaCost = 10;
+    var cookieGo = 0;
+    var slaveCost = 1000;
+    var accessoriesBar = -400;
+    var accessoriesAccel = 20;
+    var achievementsBar = -400;
+    var achievementsAccel = 20;
+    var achieveY = 0;
+    var scrollSpeed = 3;
+    var achievement1 = false;
+    var achievement2 = false;
+    var achievement3 = false;
+    var achievement4 = false;
+    var powerNumY = 0;
+    var cookieClicked = false;
+    
+/**Cookie Clicker (3)**/
+var sceneThree = function(){
+    background(rectColour1+100, rectColour2+100, rectColour3+100);
+    /** Back to Program Selection Page Button **/
+    fill(rectColour1, rectColour2, rectColour3);
+    rect(0, 0, 50, 50);
+    fill(255, 255, 255);
+    triangle(5, 25, 20, 15, 20, 35);
+    rect(20, 21, 26, 8);
+    var insideBackButton = (mouseX >= 0 && mouseX <= 50) && (mouseY >= 0 && mouseY <= 50);
+    
+    /**Finally...Actual Game**/
+    //Menu Bar 
+    fill(204, 138, 16);
+    rect(50, 0, 350, 50);
+    fill(0, 0, 0);
+    textSize(15);
+    text("Accessories", 60, 30);
+    text("Achievements", 180, 30);
+    text("+???", 345, 30);
+    
+    //cookie
+    fill(189, 122, 6);
+    ellipse(200, 255, 250, 250);
+    fill(117, 78, 0);
+    ellipse(151, 168, 24, 20);
+    ellipse(122, 222, 38, 35);
+    ellipse(196, 187, 37, 26);
+    ellipse(255, 241, 55, 31);
+    ellipse(244, 310, 63, 39);
+    ellipse(134, 312, 31, 34);
+    ellipse(173, 260, 23, 40);
+    ellipse(191, 349, 21, 38);
+    ellipse(256, 185, 45, 23);
+    var insideCookie = (mouseX >= 75 && mouseX <= 325) && (mouseY >= 130 && mouseY <= 380);
+   
+    var insideAccessories = (mouseX >= 50 && mouseX <= 170)&&(mouseY >=0 && mouseY <=50);
+    var insideAchievements = (mouseX >=170 && mouseX <=290)&&(mouseY >=0 && mouseY <=50);
+    var insideMys = (mouseX >= 330 && mouseX <= 400) && (mouseY >= 0 && mouseY <= 50);
+    //rect(330, 0, 70, 50);
+    
+    /**Clicking Interactions**/
+    mouseClicked = function(){
+        if (insideBackButton){
+            scenes = 2;    
+        }
+        
+        if (insideCookie){
+            cookieNum += cookiePowa;
+            stroke(255, 140, 0);
+            text("+" + cookiePowa, mouseX, mouseY + powerNumY);
+            noStroke();
+            cookieClicked = true;
+     
+        } else if(insideAccessories){
+            scenes = 3.1;
+        } else if(insideAchievements){
+            scenes = 3.2; 
+        }
+    };
+    while(cookieClicked === true){
+        powerNumY += 1;
+        if(powerNumY >= 10){
+            cookieClicked = false;
+            powerNumY = 0;
+        }
+        
+    }
+    //println(powerNumY);
+    textSize(25);
+    text("Cookies: " + cookieNum, 55, 90);
+    /**Mouse Hover Interactions**/
+   
+    if (insideAccessories){
+        fill(240, 89, 8);
+        rect(50, 0, 120, 5);
+        rect(50, 0, 5, 50);
+        rect(165, 0, 5, 50);
+        rect(50, 45, 120, 5);
+    } else if(insideAchievements){
+        fill(240, 89, 8);
+        rect(170, 0, 125, 5);
+        rect(170, 0, 5, 50);
+        rect(290, 0, 5, 50);
+        rect(170, 45, 125, 5);
+    } else if(insideMys){
+        fill(240, 89, 8);
+        rect(330, 0, 70, 5);
+        rect(330, 0, 5, 50);
+        rect(396, 0, 5, 50);
+        rect(330, 45, 70, 5);
+    }
+        
+    
+    cookieNum += cookieGo;
+    if(cookieGo >= 1){
+        text("+" + cookieGo, random(1,400), random(1,400));
+    }
+};
+
+
+/**Accessories for Cookie Program**/
+var accessories = function(){
+    fill(255, 255, 255);
+    rect(0, accessoriesBar, 400, 400);
+    
+    if (accessoriesBar >= 0){
+        accessoriesAccel = 0; 
+        background(255, 255, 255);
+        
+        /**Accessories Back Button**/
+        fill(255, 111, 0);
+        rect(0, 365, 400, 35);
+        fill(105, 37, 5);
+        triangle(15, 395, 200, 370, 385, 395);       
+        var insideAccessoriesB = mouseY >= 365;
+        
+        /**Actual Stuff Here ____**/
+        fill(0, 0, 0); 
+        textSize(13);
+        text("Cookies: " + cookieNum, 10, 25);
+        text("POWAAAAAA: " + cookiePowa, 130, 25);
+        text("Slaves...Ahem...Workers, er Clickers I guess: " + cookieGo, 8, 60);
+        
+        /**Buy Powaaaa Button**/
+        fill(255, 0, 0);
+        rect(240, 5, 160, 32);
+        fill(0, 0, 0);
+        text(powaCost, 246, 25);
+        text("cookies", 340, 25);
+        var insideBPowa = (mouseX >= 240) && (mouseY >= 5 && mouseY <= 37); 
+        
+        /**Buy Slave Button**/
+        fill(122, 122, 122);
+        rect(0, 70, 400, 30);
+        fill(0, 0, 0);
+        text(slaveCost, 10, 90);
+        text("cookies", 340, 90);
+        var insideBSlaves = (mouseY >= 70 && mouseY <= 100);
+    }
+    /**Mouse Clicking Interaction**/
+    mouseClicked = function(){
+        if (insideAccessoriesB){
+            scenes = 3;
+            accessoriesBar = -400;
+            accessoriesAccel = 20;
+        } else if(insideBPowa && cookieNum >= powaCost){
+            cookieNum -= powaCost;
+            if (cookiePowa >= 10 && cookiePowa < 25){
+                cookiePowa += 2;
+            } else if (cookiePowa >= 25 && cookiePowa < 50){
+                cookiePowa += 3;
+            } else if (cookiePowa >= 50 && cookiePowa < 500){
+                cookiePowa += 5;
+            } else if (cookiePowa >= 500){
+                cookiePowa *= 1.5;
+                cookiePowa = floor(cookiePowa);
+            } else {
+                cookiePowa += 1;
+            }
+            powaCost *= 1.5;
+            powaCost = round(powaCost);
+        } else if(insideBSlaves && cookieNum >= slaveCost){
+            cookieNum -= slaveCost;
+            cookieGo += 1;
+            slaveCost += (cookieGo * slaveCost)/2;
+            slaveCost = round(slaveCost);
+        }
+        
+    };
+    accessoriesBar += accessoriesAccel;
+    cookieNum += cookieGo;  
+};
+
+/**Achievements for Cookie Program**/
+var achievements = function(){
+    fill(255, 255, 255);
+    rect(0, achievementsBar, 400, 400);   
+    
+    if (achievementsBar >= 0){
+        background(255, 255, 255);
+        achievementsAccel = 0;
+        /**Achievements Back Button**/
+            fill(255, 111, 0);
+            rect(0, 365, 400, 35);
+            fill(105, 37, 5);
+            triangle(15, 395, 200, 370, 385, 395);       
+            var insideAchievementsB = mouseY >= 365;
+            
+        /**Achievements!!!**/
+            fill(255, 191, 0);
+            textSize(20);
+            text("Novice Achievements", 90, achieveY+30);
+            if (cookieNum >= 1){
+                achievement1 =  true;  
+            }
+            if(cookieNum >= 100){
+                achievement2 =  true;
+            }
+            if(cookieGo >= 1){
+                achievement3 = true;
+            }
+            if(cookieNum >= 10000){
+                achievement4 = true;
+            }
+            
+            if(achievement1 === true){
+                textSize(13);
+                fill(0, 0, 0);
+                text("Wow...You can click, good job buddy.", 10, achieveY+65);      
+            }
+            if(achievement2 === true){
+                textSize(13);
+                fill(0, 0, 0);
+                text("Looks like progress... keep it up!", 10, achieveY+100);
+            }
+            if(achievement3 === true){
+                textSize(13);
+                fill(0, 0, 0);
+                text("Slaves are LEGAL now??!?!?", 10, achieveY+135);
+            }
+            if(achievement4 === true){
+                textSize(13);
+                fill(0, 0, 0);
+                text("Now, if you sell 'em for like a dollar each. \nYou can donate them to Khan academy!", 10, achieveY+170);
+            }
+            
+            
+
+        mouseScrolled =  function(){
+        };
+        if (mouseIsPressed && mouseY <= 100 && achieveY <= 0){
+            achieveY += scrollSpeed;    
+        } else if(mouseIsPressed && mouseY >= 300){
+            achieveY -= scrollSpeed;    
+        }
+        
+        
+
+    }   
+        
+    /**Clicking Interactions**/
+    mouseClicked =  function(){
+        if (insideAchievementsB){
+            scenes = 3;
+            achievementsBar = -400;
+            achievementsAccel = 20;
+            achieveY = 0;
+        }
+        
+    };
+    achievementsBar += achievementsAccel;
+    cookieNum += cookieGo;  
+};
+
+
+/***Variables for Program2**/
+var playerSize = 30;
+var playerX = 200-(playerSize*2);
+playerX = constrain(playerX, 0, 400-playerSize);
+var pGround = 400;
+var playerY = pGround-playerSize;
+playerY = constrain(playerY, -(pGround-playerSize), pGround-playerSize);
+var pLeft = false;
+var pRight = false;
+var pJumping = false;
+var pJump = true;
+var pFalling = false;
+var pJumpH = 200- (pGround-playerY);
+var pJumpS = ((pGround-pJumpH)/10) - playerSize/2; 
+pJumpS = constrain(pJumpS, -10, 30);
+
+/***Key variables! (For global use!!)***/
+var arrowKeys = [];
+var keys = [];
+var runEvenReleasedKeys = [];
+var wKey = 'w';
+var aKey = 'a';
+var sKey = 's';
+var dKey = 'd';
+var spaceKey = ' ';
+
+keyPressed = function(){
+    arrowKeys[keyCode]= true;
+    keys[key.toString()]= true;
+    runEvenReleasedKeys[key.toString()]= true;
+};
+keyReleased = function(){
+    arrowKeys[keyCode]= false;
+    keys[key.toString()]= false;
+    runEvenReleasedKeys[key.toString()]= true;
+    pLeft = false;
+    pRight = false;
+};
+
+/***Program2 functions***/
+var player = function(x,y,w,h){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        //if (keyIsPressed && keyCode === RIGHT){
+        //    this.x += 5;
+        //} else if(keyIsPressed && keyCode === LEFT){
+        //    this.x -= 5;    
+        //}
+};
+player.prototype.draw = function() {
+    fill(137, 142, 156);
+    rect(this.x, this.y, this.w, this.h); 
+    fill(0, 0, 0);
+};
+player.prototype.move = function(){
+        if(arrowKeys[39] || arrowKeys[68]){
+            pRight = true;    
+        }
+        if(arrowKeys[37] || arrowKeys[65]){
+            pLeft = true;    
+        }
+        if((arrowKeys[38] || arrowKeys[87]) && pJumping === false && pFalling === false && pJump === true){
+            pJumping = true;    
+        }
+        if(arrowKeys[40] || arrowKeys[83]){
+            pFalling = true; 
+            pJumping = false;
+        }
+        
+        if(pRight === true){
+            playerX += random(0, 10); 
+        }    
+        if(pLeft === true){
+            playerX -= random(0, 10);
+        } 
+        
+        //Gravitational Jumping
+        if (pJumping === true){
+            playerY -= pJumpS*(playerY/pJumpH) - (pJumpS/2);        
+        }
+
+        if (playerY <= pJumpH){
+            pJumping = false;
+            pFalling = true;
+        }
+        if (pFalling === true){
+            playerY += pJumpS*(playerY/pJumpH) - (pJumpS/2);    
+        }
+        
+        //Constrain parameters
+        if (playerY >= pGround-playerSize){
+            pFalling = false; 
+            pJumping = false;
+            playerY = pGround-playerSize;
+            
+        }
+        //println(pJumpS*(playerY/pJumpH) - (pJumpS/2));
+    };  
+    
+var block = function(x, y, w, h){
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;   
+    //frameRate(2);
+    rectMode(CORNER);
+};
+block.prototype.draw = function() {
+    fill(0, 0, 0);
+    rectMode(CORNER);
+    rect(this.x, this.y, this.w, this.h);
+};
+block.prototype.collision = function(top, bottom, left, right){
+    this.top = top;
+    var onTop = (playerY <= this.y && (playerX + playerSize >= this.x && playerX <= this.x + this.w && pFalling === true));
+    this.bottom = bottom;
+    this.left = left;
+    this.right = right;
+    playerY = constrain(playerY, (-pGround-playerSize), pGround-playerSize);
+    /**Top collision**/
+    if (this.top === true){
+        if(pFalling && onTop === true){
+        playerY = constrain(playerY, -(pGround-playerSize), pGround-playerSize);
+                pGround = this.y;
+                if(onTop && (playerX + playerSize <= this.x)){
+                pFalling = true;
+                pJumping = false;
+                pGround = 400;
+                }
+                if(onTop && (playerX + playerSize >= this.x + this.w)){
+                pFalling = true;  
+                pJumping = false;
+                pGround = 400;
+                }
+                if(playerY === pGround-playerSize){
+                pFalling = false;
+                pJump = true;
+                pJumping = false;
+                }
+            
+            
+        }
+        
+            
+    }
+    //println(pGround);
+    /**Elevated JumpH**/
+    if (onTop === true){
+        pJumpH =  200 - (pGround-playerY);
+    }
+    rectMode(CORNER);
+}; 
+var P2player = new player(playerX, playerY, playerSize, playerSize);
+/**Program2 (4)**/
+var sceneFour = function(){
+    background(255, 255, 255);
+    /** Back to Program Selection Page Button **/
+    fill(rectColour1, rectColour2, rectColour3);
+    rect(0, 0, 50, 50);
+    fill(255, 255, 255);
+    triangle(5, 25, 20, 15, 20, 35);
+    rect(20, 21, 26, 8);
+    var insideBackButton = (mouseX >= 0 && mouseX <= 50) && (mouseY >= 0 && mouseY <= 50);
+    
+    /**Actual thing**/
+    fill(0, 0, 0);
+    text(scenes, 375, 20);
+    
+    
+    P2player.draw();
+    P2player.move();
+    
+    playerX = constrain(playerX, 0, 350);
+ 
+    
+    /***SCENE CHANGES***/
+    //Going into the next scene
+    if(playerX >= 350 && scenes === 4){
+        scenes = 4.1; 
+        playerX = 5;
+    } else if(playerX >= 350 && scenes === 4.1){
+        scenes = 4.2; 
+        playerX = 5;    
+    } else if(playerX >= 350 && scenes === 4.2){
+        scenes = 4.3; 
+        playerX = 5;    
+    }
+    //Going back into the previous scene
+    if(playerX <= 0 && scenes === 4.1){
+        scenes = 4;  
+        playerX = 345;
+    } else if(playerX <= 0 && scenes === 4.2){
+        scenes = 4.1;  
+        playerX = 345; 
+    } else if(playerX <= 0 && scenes === 4.3){
+        scenes = 4.2;  
+        playerX = 345; 
+    }
+    
+    /**Go Back**/
+    mouseClicked = function(){
+        if(insideBackButton){
+            scenes = 2;
+        }
+    };
+    
+    //println(pJumpH);
+
+};
+    
+/**Program2 (4.1)**/
+var levelOne = function(){
+    sceneFour();
+    var platform1 = new block(130, 350, 90, 5);
+    platform1.draw();
+    platform1.collision(true, false, false, false);
+};
+
+/**Program2 (4.2)**/
+var levelTwo = function(){
+    sceneFour();
+};
+
+/**Program2 (4.3)**/
+var levelThree = function(){
+    sceneFour();
+};
+
+/**Variables for Scene 5 - Program3**/
+//player colour
+var shooterColor = grey;
+//Player size
+var shooterSize = 20;
+//Array for bullets' Y
+var bullet1Y = [];
+/***Stats***/
+    var shooterAtk = 10;
+    var atkRange = 1;
+    //Bullet speed
+    var bullet1Speed = 5;
+    //Shoot freq
+    var atkSpd = 100;
+    //Base HP
+    var baseHPStat = 0;
+    var baseHP = 50+baseHPStat;
+    //player move speed
+    var shooterSpeed = 10;
+//Bullet Range
+var bullet1MaxRange = 100+atkRange*5;
+var bullet1Range = [];
+//Array for bullets' X
+var bullet1X = [];
+//Time
+var sec = 60;
+atkSpd = constrain(atkSpd, 0, 50);
+var bullet1Delay = (100-( (12.782*log(atkSpd)) *2))  /100;
+//Shoot freq check
+var bullet1DelayTimer = 1;
+/**Shooter Initialization**/
+var shooter = function(x, y, size, gameMode, color){
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.gameMode = gameMode;
+    this.color = color;
+};
+shooter.prototype.gameMode = function() {};
+shooter.prototype.draw = function() {
+    fill(shooterColor);
+    rect(this.x, this.y, this.size, this.size);
+    this.x = constrain(this.x, 1, 379);
+    this.y = constrain(this.y, 51, 379);
+};
+shooter.prototype.bullet = function(){
+    //Draw Bullet
+    for (var i = 0; i < bullet1X.length; i++){
+        fill(black);
+        ellipse(bullet1X[i], bullet1Y[i], 5, 5);
+    }
+    //Move Bullet
+    for(var i = 0; bullet1Y.length > i; i++){
+        bullet1Y[i] -= bullet1Speed;
+    }
+    //Range Constrictions    
+    if (bullet1Y[0] <= bullet1Range[0]){
+        bullet1X.shift();
+        bullet1Y.shift();
+        bullet1Range.shift();
+    }
+    
+};
+//Called in Program when space is pressed
+//-Draws new bullets
+shooter.prototype.shoot = function() {
+    frameRate(60);
+    if(bullet1DelayTimer >= bullet1Delay){
+        bullet1X.push(this.x+(shooterSize/2));
+        bullet1Y.push(this.y);
+        bullet1Range.push(this.y-bullet1MaxRange);
+        bullet1DelayTimer = 0;
+        frameRate(100);
+    }
+    bullet1DelayTimer += 1/sec;
+    frameRate(60);
+    /*
+    println("BulletX: " + bullet1X);
+    println("BulletY: " + bullet1Y);
+    */
+    //println(bullet1X);
+    
+    /*if (bullet1Y > bullet1Range || keys[spaceKey] === false){
+        bullet1Y = 5;
+    }
+    //var bullet1X = this.x+(shooterSize/2);
+    if (keys[spaceKey]){
+        fill(black);
+        ellipse(this.x+(shooterSize/2), this.y-bullet1Y, 5, 5);
+        bullet1Y += 3;
+        println(bullet1Y);
+        
+    }*/
+};
+shooter.prototype.move = function() {
+    if (arrowKeys[UP] || keys[wKey]){
+            this.y -= random(1, shooterSpeed);
+    }
+    if (arrowKeys[DOWN] || keys[sKey]){
+            this.y += random(1, shooterSpeed);
+    }
+    if (arrowKeys[LEFT] || keys[aKey]){
+            this.x -= random(1, shooterSpeed);
+    }
+    if(arrowKeys[RIGHT] || keys[dKey]){
+            this.x += random(1, shooterSpeed);
+    }
+
+};
+shooter.prototype.stats = function(){
+    if(this.x <= 50 || (mouseX <= 50 && mouseY >= 50)){
+        /***Stat Display***/
+        fill(rectColour3-50, rectColour1-50, rectColour3-50);
+        //HP
+        text("Home HP: ", 0, 65);
+        rect(3, 70, 60, 30);
+        //Atk
+        text("Attack: ", 0, 120);
+        rect(3, 125, 60, 30);
+        //AtkSpd
+        text("Attack Speed: ", 0, 175);
+        rect(3, 180, 60, 30);
+        /***Stats Numbers***/
+        fill(black);
+        //HP Text
+        text(baseHPStat, 28, 88);
+    }
+    
+};
+var player = new shooter(190, 380, shooterSize, 'easy', shooterColor);
+
+/**Mobs Initialization**/
+var mobs = function(x, y, w, h, type, times, hp, speed){
+    this.x = [];
+    this.y = [];
+    this.w = [];
+    this.h = [];
+    this.type = type;
+    this.times = times;
+    this.hp = [];
+    this.speed = [];
+};
+
+mobs.prototype.spawn = function(){
+    if(this.type === "square guys"){
+        this.w.push(random(25, 45));
+        this.h.push(this.w[this.w.length-1]);
+        this.x.push(random(0, 400-this.w[this.w.length-1]));
+        this.y.push(0-this.h[this.h.length-1]);
+        this.speed.push(random(0.05, 0.25));
+        this.hp.push(floor(random(3, 5)));
+        fill(ye);
+        strokeWeight(1);
+        stroke(0, 0, 0);
+        rect(this.x[this.x.length-1], this.y[this.y.length-1], 
+        this.w[this.w.length-1], this.h[this.h.length-1]);
+        noStroke();
+    }  
+    if(this.type === "circle guys"){
+        this.w.push(random(10, 30));
+        this.h.push(this.w[this.w.length-1]);
+        this.x.push(random(0, 400-this.w[this.w.length-1]));
+        this.y.push(0-this.h[this.h.length-1]);
+        this.speed.push(random(0.3, 1));
+        this.hp.push(floor(random(1, 5)));
+        fill(ye);
+        strokeWeight(1);
+        stroke(0, 0, 0);
+        ellipse(this.x[this.x.length-1], this.y[this.y.length-1], 
+        this.w[this.w.length-1], this.h[this.h.length-1]);
+        noStroke();
+    }
+    if(this.type === "tringle guys"){
+        this.w.push(random(20, 30));
+        this.h.push(this.w[this.w.length-1]);
+        this.x.push(random(0, 400-this.w[this.w.length-1]));
+        this.y.push(0-this.h[this.h.length-1]);
+        this.speed.push(random(1, 2));
+        this.hp.push(floor(random(0.01, 2)));
+        fill(ye);
+        strokeWeight(1);
+        stroke(0, 0, 0);
+        triangle(this.x[this.x.length-1], this.y[this.y.length-1], this.x[this.x.length-1]+this.w[this.w.length-1], this.y[this.y.length-1],                      this.x[this.x.length-1]+(this.w[this.w.length-1]/2), this.y[this.y.length-1]+this.h[this.x.length-1]);
+        noStroke();
+    }
+};
+mobs.prototype.draw = function() {
+    for(var x = 0; x < this.x.length;x++){
+        if(this.type === "square guys"){
+            fill(ye);
+            strokeWeight(1);
+            stroke(0, 0, 0);
+            rect(this.x[x], this.y[x], this.w[x], this.h[x]);
+            noStroke();
+        }
+        if(this.type === "circle guys"){
+            fill(ye);
+            strokeWeight(1);
+            stroke(0, 0, 0);
+            ellipse(this.x[x], this.y[x], this.w[x], this.h[x]);
+            noStroke();
+        }
+        if(this.type === "tringle guys"){
+            fill(ye);
+            strokeWeight(1);
+            stroke(0, 0, 0);
+            triangle(this.x[x], this.y[x], this.x[x]+this.w[x], this.y[x],                      this.x[x]+(this.w[x]/2), this.y[x]+this.h[x]);
+            noStroke();
+        }
+    }
+};
+var mobDirectionX = 1;
+var mobDirectionY = 1;
+var mobSpeedX = 0; 
+var mobSpeedY = 0;
+var mobSide;
+
+var tringleTimer = [];
+mobs.prototype.move = function(){
+    for(var y = 0; y < this.y.length; y++){
+        if(this.type === "circle guys"){
+            mobSide = floor( random(random(0, 10), random(10, 20) ));
+            if(mobSpeedX === 0){
+                mobSpeedX = this.speed[y];
+            }
+            if(mobSide === 0){
+                mobDirectionX = -1;
+                mobSpeedX *= mobDirectionX;
+            } else {
+                mobDirectionX = 1;
+                if(mobSpeedX === 0){
+                    mobSpeedX = this.speed[y];
+                }
+            }
+            this.x[y] += random(-mobSpeedX*3, mobSpeedX*3);
+            
+            if(mobSpeedY === 0){
+                mobSpeedY = this.speed[y];
+            }
+            
+            var mobVer = floor(random(0, 2));
+            if(mobVer === 0){
+                mobDirectionY = -1;
+                mobSpeedY *= mobDirectionY;
+            } else {
+                mobDirectionY = 1;
+                if(mobSpeedY === 0){
+                    mobSpeedY = this.speed[y];
+                }
+            }
+            if(mobSpeedY > 0){
+                this.y[y] += mobSpeedY*1.3*3;
+            } else {
+                this.y[y] += mobSpeedY*3;
+            }
+            
+        } else if(this.type === "tringle guys"){
+            if(this.y[y] < 100){ 
+                this.y[y] += this.speed[y];
+            } else if(this.y[y] >= 100){
+                if(!tringleTimer[y]){
+                    tringleTimer[y] = millis();
+                }
+                if(millis() - tringleTimer[y] > 3*1000){
+                    this.y[y] += this.speed[y];
+                    this.speed[y] *= 1.1;
+                    for(var tringleTrail = 0; tringleTrail < 10; tringleTrail++){
+                        fill(rectColour1, rectColour2, rectColour3);
+                        ellipse(random(this.x[y]+(this.w[y]/4), this.x[y]+(3*this.w[y]/4))%400, random(this.y[y]-1, this.y[y]-random(0, 50)), 5, 5);
+                    }
+                }
+            }
+            
+        } else {
+            this.y[y] += this.speed[y];
+        }
+        this.x[y] = constrain(this.x[y], 70, 400-this.w[y]);
+        this.y[y] = constrain(this.y[y], 0-this.h[y], 450);
+        if(this.y[y] >= 450){
+            this.speed.splice(y, 1);
+            this.y.splice(y, 1);
+            this.x.splice(y, 1);
+            this.w.splice(y, 1);
+            this.h.splice(y, 1);
+            baseHP -= this.hp[y];
+            tringleTimer.splice(y, 1);
+            this.hp.splice(y, 1);
+        }
+        /*if(this.w > this.x){
+            this.w.splice(y, 1);
+            this.h.splice(y, 1);
+        }*/
+        
+    }
+};
+mobs.prototype.checkHits = function(){
+    if(bullet1Y.length > 0 && this.y.length > 0){
+        //Shift through shooter bullets
+        for(var i = 0; i < bullet1Y.length; i++){
+            //Shift through mobs
+            for(var y = 0; y < this.y.length; y++){
+                //Condition for checking collision
+                var insideMob = (bullet1Y[i] <= this.y[y]+this.h[y] && bullet1Y[i] >= this.y[y] && bullet1X[i] >= this.x[y] && bullet1X[i] <= this.x[y] + this.w[y]);
+                //println(bullet1Y);
+                //println("This is index of " + i + ", " + y + " (i, y)");
+                if(insideMob){
+                    //Decrement in mob health
+                    this.hp[y] -= shooterAtk;
+                    fill(255, 0, 0);
+                    text("- " + shooterAtk, this.x[y] + this.w[y], 
+                    this.y[y]+(this.h[y]/2));
+                    bullet1X.splice(i, 1);
+                    bullet1Y.splice(i, 1);
+                    bullet1Range.splice(i, 1);
+                    //If mob dies
+                    if(this.hp[y] <= 0){
+                        this.speed.splice(y, 1);
+                        this.y.splice(y, 1);
+                        this.x.splice(y, 1);
+                        this.w.splice(y, 1);
+                        this.h.splice(y, 1);
+                        this.hp.splice(y, 1);
+                    }
+                }
+            }
+        }
+    }
+};
+/**LEVELS :DD**/
+var levelOneSpawned = false;
+    var levelOne = new mobs(0, 0, 0, 0, "square guys", 5, 0, 0);
+    var levelOneMobSpawnTimer = 0;
+var levelTwoSpawned = false;
+    var levelTwo = new mobs(0, 0, 0, 0, "circle guys", 3, 0, 0);
+    var levelTwoMobSpawnTimer = 0;
+var levelThreeSpawned = false;
+    var levelThree = new mobs(0, 0, 0, 0, "tringle guys", 1, 0, 0);
+    var levelThreeMobSpawnTimer = 0;
+var levelFourSpawned = false;
+    var levelFour = new mobs(0, 0, 0, 0, "tringle guys", 1, 0, 0);
+    var levelFour2 = new mobs(0, 0, 0, 0, "square guys", floor(random(0, 5)), 0, 0);
+    var levelFour3 = new mobs(0, 0, 0, 0, "circle guys", floor(random(1, 3)), 0, 0);
+    var levelFourMobSpawnTimer = 0;
+var levelFiveSpawned = false;
+    var levelFive = new mobs(0, 0, 0, 0, "square guys", 10, 0, 0);
+    var levelFiveMobSpawnTimer = 0;
+var levelSixSpawned = false;
+    var levelSix = new mobs(0, 0, 0, 0, "circle guys", 10, 0, 0);
+    var levelSixMobSpawnTimer = 0;
+var levelSevenSpawned = false;
+    var levelSeven = new mobs(0, 0, 0, 0, "tringle guys", 5, 0, 0);
+    var levelSevenMobSpawnTimer = 0;
+
+var P3player = new shooter(190, 380, shooterSize, 'easy', shooterColor);
+/**Program3 - Project: Simple Game (5)**/
+var simpleGame = function(){
+    background(255, 255, 255);
+    /** Back to Program Selection Page Button **/
+    fill(rectColour1, rectColour2, rectColour3);
+    rect(0, 0, 50, 50);
+    fill(255, 255, 255);
+    triangle(5, 25, 20, 15, 20, 35);
+    rect(20, 21, 26, 8);
+    var insideBackButton = (mouseX >= 0 && mouseX <= 50) && (mouseY >= 0 && mouseY <= 50);
+    
+    /**Actual game stuff**/
+    frameRate(60);
+    
+    P3player.draw();
+    P3player.move();
+    if(keys[spaceKey]){
+        P3player.shoot();
+    }
+    P3player.bullet();
+    P3player.stats();
+/**Mobs && Levels!**/
+    
+    /*****Level One*****/
+    if(levelOneSpawned === false){
+        for(var x = 0; x < levelOne.times; x++){
+            levelOne.spawn();
+        }
+        levelOneSpawned = true;
+        levelOne.times = 0;
+    }
+    if(levelOne.hp.length > 0){
+        levelOne.draw();
+        levelOne.move();
+        levelOne.checkHits();
+    } else {
+        if(levelTwoSpawned === false && levelOneSpawned === true){
+            levelOneMobSpawnTimer += 1/sec;
+            fill(re);
+            text(floor(levelOneMobSpawnTimer), 380, 20);
+        }
+    }
+    /*****Level Two*****/
+    if(levelOneMobSpawnTimer >= 5){
+        if(levelTwoSpawned === false){
+            for(var x = 0; x < levelTwo.times; x++){
+                levelTwo.spawn();
+            }
+            levelTwoSpawned = true;
+            levelTwo.times = 0;
+        }
+    }
+    if(levelTwo.hp.length > 0){
+        levelTwo.draw();
+        levelTwo.move();
+        levelTwo.checkHits();
+    } else {
+        if(levelThreeSpawned === false && levelTwoSpawned === true){
+            levelTwoMobSpawnTimer += 1/sec;
+            fill(re);
+            text(floor(levelTwoMobSpawnTimer), 380, 20);
+        }
+    }
+    /*****Level Three*****/
+    if(levelTwoMobSpawnTimer >= 5){
+        if(levelThreeSpawned === false){
+            for(var x = 0; x < levelThree.times; x++){
+                levelThree.spawn();
+            }
+            levelThreeSpawned = true;
+            levelThree.times = 0;
+        }
+    }
+    if(levelThree.hp.length > 0){
+        levelThree.draw();
+        levelThree.move();
+        levelThree.checkHits();
+    } else {
+        if(levelFourSpawned === false && levelThreeSpawned === true){
+            levelThreeMobSpawnTimer += 1/sec;
+            fill(re);
+            text(floor(levelThreeMobSpawnTimer), 380, 20);
+        }
+    }
+    /*****Level Four*****/
+    if(levelThreeMobSpawnTimer >= 5){
+        if(levelFourSpawned === false){
+            for(var x = 0; x < levelFour.times; x++){
+                levelFour.spawn();
+            }
+            levelFour.times = 0;
+            for(var x = 0; x < levelFour2.times; x++){
+                levelFour2.spawn();
+            }
+            levelFour2.times = 0;
+            for(var x = 0; x < levelFour3.times; x++){
+                levelFour3.spawn();
+            }
+            levelFour3.times = 0;
+            levelFourSpawned = true;
+        }
+    }
+    if(levelFour.hp.length > 0 || levelFour2.hp.length > 0 || levelFour3.hp.length > 0){
+        levelFour.draw();
+        levelFour.move();
+        levelFour.checkHits();
+    
+        levelFour2.draw();
+        levelFour2.move();
+        levelFour2.checkHits();
+    
+        levelFour3.draw();
+        levelFour3.move();
+        levelFour3.checkHits();
+    } else {
+        if(levelFiveSpawned === false && levelFourSpawned === true){
+            levelFourMobSpawnTimer += 1/sec;
+            fill(re);
+            text(floor(levelFourMobSpawnTimer), 380, 20);
+        }
+    }
+    /*****Level Five*****/
+    if(levelFourMobSpawnTimer >= 5){
+        for(var x = 0; x < levelFive.times; x++){
+            levelFive.spawn();
+        }
+        levelFive.times = 0;
+        levelFiveSpawned = true;
+    }
+    if(levelFive.hp.length > 0){
+        levelFive.draw();
+        levelFive.move();
+        levelFive.checkHits();
+    } else {
+        if(levelSixSpawned === false && levelFiveSpawned === true){
+            levelFiveMobSpawnTimer += 1/sec;
+            fill(re);
+            text(floor(levelFiveMobSpawnTimer), 380, 20);
+        }
+    }
+    /*****Level Six*****/
+    if(levelFiveMobSpawnTimer >= 5){
+        for(var x = 0; x < levelSix.times; x++){
+            levelSix.spawn();
+        }
+        levelSix.times = 0;
+        levelSixSpawned = true;
+    }
+    if(levelSix.hp.length > 0){
+        levelSix.draw();
+        levelSix.move();
+        levelSix.checkHits();
+    } else {
+        if(levelSevenSpawned === false && levelSixSpawned === true){
+            levelSixMobSpawnTimer += 1/sec;
+            fill(re);
+            text(floor(levelSixMobSpawnTimer), 380, 20);
+        }
+    }
+    /*****Level Seven*****/
+    if(levelSixMobSpawnTimer >= 5){
+        for(var x = 0; x < levelSeven.times; x++){
+            levelSeven.spawn();
+        }
+        levelSeven.times = 0;
+        levelSevenSpawned = true;
+    }
+    if(levelSeven.hp.length > 0){
+        levelSeven.draw();
+        levelSeven.move();
+        levelSeven.checkHits();
+    }
+    
+/**Go Back**/
+    mouseClicked = function(){
+        if(insideBackButton){
+            scenes = 2;
+        }
+    };
+    
+};
+
+/**Draw**/
+draw = function() {
+    
+    if (scenes === 1){
+        sceneOne();
+    } else if (scenes === 2){
+        sceneTwo();
+    } else if (scenes === 3){
+        sceneThree();
+    } else if (scenes === 3.1){
+        accessories();
+    } else if (scenes === 3.2){
+        achievements();
+    } else if (scenes === 4){
+        sceneFour();
+        text("Welcome to this experimental \n block person world!", 6, 200);
+    } else if (scenes === 4.1){
+        levelOne();
+        text("Still fixing the bugs... lol", 6, 200);
+        //println(pJumpH);
+    } else if(scenes === 4.2){
+        levelTwo();
+    } else if(scenes === 4.3){
+        levelThree();
+    } else if(scenes === 5){
+        simpleGame();
+    } else {
+           
+    }
+
+};
+    
+
+
